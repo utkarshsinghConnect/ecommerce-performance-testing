@@ -1,2 +1,25 @@
 # software-performance-testing
-JMeter scripts examples
+
+Most organisation spend huge amount of sum on software development, manual and automation testing but at the end of the cycle the final product fails to serve large concurrent requests.
+There we have something known as performance testing, which nothing but generates large number of concurrent requests to your application and provide the results whether your application would be able to serve real audience or not. Performance testing is required for any application which expect the transaction load more than 50 transaction per second and it become the crucial testing if you have the monolith architecture.
+Apache JMeter is an open source tool which can be used to perform load, stress, endurance performance testing, various report generation and can also be used to debug the errors reported during testing.
+Usually as a performance tester you are expected to perform the four types of test, however the execution depends on the client expectation and experience:
+1. Baseline test: this test is the smallest and you execute this test before running any other test from the list. Baseline test contains the feature testing which is essential for the product and a user must go through these steps in order to achieve his goal. Usually the number of users for this test are 10-25% of the number of users we are going to have in load test.
+2. Load test: load test is the standard test in which the transaction per second is based on the number of users going to use the product on day to day basis. Since this load is expected always by business hence load test is considered as test in which system should show zero error. The typical duration of test is 30 minutes.
+3. Stress test: this test is performed to verify that whether your product would be able to handle the expected stress. For example, the e-commerce websites expects the thousands of orders per second during their sale hours hence while building their e-commerce product they perform various stress test, however this test can show few errors or exceptions depends on the stress criteria and overall capacity of the servers to serve concurrent request but in e-commerce products business expect zero error and if any sort of error happens then in that case there should be an option to manually trigger the failed transactions.the typical duration of test is 25 minutes.
+4. Endurance test: endurance performance test executes the certain load for longer period of time. This test ensures that the product will perform consistent even if it is being used consistently for longer period of time by multiple users. The typical test duration is 120 minutes.
+
+A typical operation of certain product if done from scripting tool like JMeter takes no more than 10 seconds that means the operation performed by 10 users would get complete in 100 seconds. However our test duration is 10 minutes in that case we would want our 10 users to repeat the process unto 10 minutes to maintain the TPS so that we can observe the system behaviour better.
+JMeter:
+Prerequisite = Java 8/9(as of 2018)
+Download the Jmeter from https://jmeter.apache.org/download_jmeter.cgi and open JMeter( jmeter.bat or jmeter.exe depends on your OS), once you open this tool by default it gives you a test plan. 
+
+1. A test plan is nothing but your type of test, the next thing you would like to do is to right click on test plan and see what option you have in JMeter.
+    1. Thread(users) - thread group provides you the control that how many users are going to perform the operation you would add in a thread-group, that means if you add operation login and browse in a thread-group 1, then all the users associated with thread-group 1 would only perform the login and browse product operation. You can multiple thread-groups and these thread-group can become your scenarios. For example, you want 20% users to just browse your product, 30% users to add product to Wishlist and next 50% users to place order then in that case you can create three different thread-group.
+        1. sampler
+        2. Logic controller
+        3. Pre and post processor
+        4. Assertions
+        5. Config elements
+    2. Config elements- config element provides you the options to add configurations, default configurations for header manager, cookies manager, cache managers, csv data load etc options. This options are useful in case you would like to have default values available to all of your request. CSV data load is useful to load the list of users from a text or CSV file.
+    3. Listener- this provides you the option to store and review the execution results in results tree, summary report, aggregate report and simple data writer etc. the most useful report here is aggregate report which provides you the total samples submitted and what was the failure with 90%,95% and 99% line. This also provides you the details like which step failed and this is expected report to business. You have an option to save this report as CSV.View results tree and simple data writers are verbose loggers and log every single request and response. This is useful for debugging purpose but when you are running the tests like stress and endurance test, we advise you to disable these options because it generates the huge amount of logs.
